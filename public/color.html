@@ -11,6 +11,8 @@
             <a-assets>
                 <a-asset-item id='model' src='assets/Door.obj'></a-asset-item>
                 <img id='texture' src='assets/DoorTexture.jpg'>
+                <a-asset-item id='box' src='assets/Box.obj'></a-asset-item>
+                <img id='roomtexture' src='assets/Walls.jpg'>
             </a-assets>
 
             <a-entity id="player2Cam" position="0 2 0 " camera look-controls wasd-controls>
@@ -26,6 +28,8 @@
             <a-entity id="p2door1" position="-5 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
             <a-entity id="p2door2" position="0 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
             <a-entity id="p2door3" position="5 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
+
+            <a-entity id="box" position="0 -1.3 -10" obj-model="obj: #box" scale="1 0.5 1" material="src:#roomtexture"></a-entity>
 
                 <script>
                     P2door1 = document.querySelector('#p2door1')
@@ -45,7 +49,7 @@
                     });
                     socket.on('p2Wins', function() {
                         //do the delete doors thing
-                        console.log("Delete player 1 door")
+                        console.log("You Won")
                         
                     });
                 </script>
