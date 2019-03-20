@@ -1,28 +1,54 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+        <script src="/js/aframe-v0.8.2.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/randomNum.js"></script>
+        
     </head>
     <body>
-        <h1>This is the color client</h1>
+        <a-scene>
+            <a-assets>
+                <a-asset-item id='model' src='assets/Door.obj'></a-asset-item>
+                <img id='texture' src='assets/DoorTexture.jpg'>
+            </a-assets>
 
-        <script src="/socket.io/socket.io.js"></script>
-        <script>
-            let socket = io();
+            <a-entity id="player2Cam" position="0 2 0 " camera look-controls wasd-controls>
 
-            //default connect event
-            socket.on('connect', function() {
-                console.log("connected!");
-            });
+                <a-entity   cursor="fuse:true; fuseTimeout:500;"
+                            position="0 0 -1"
+                            geometry="primitive:ring; radiusInner:0.02; radiusOuter:0.03;"
+                            material="shader:flat; color:black;" >
+                </a-entity>
 
-            socket.on('color_change', function(data) {
-                //create rgb color string for css
-                let colorStr = 'rgb(' + data.r + ',' + data.g + ',' + data.b + ')';
-                console.log("color received: " + colorStr);
+            </a-entity>
 
-                //set background color with received color
-                document.body.style.backgroundColor = colorStr;
-            });
-        </script>
+            <a-entity id="p2door1" position="-5 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
+            <a-entity id="p2door2" position="0 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
+            <a-entity id="p2door3" position="5 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
+
+                <script>
+                    P2door1 = document.querySelector('#p2door1')
+                    P2door2 = document.querySelector('#p2door2')
+                    P2door3 = document.querySelector('#p2door3')
+
+
+
+                    socket.on('p1Wins', function() {
+                        //do the delete doors thing
+                        console.log("Delete player 2 doors")
+                        
+                        P2door1.parentNode.removeChild(P2door1)
+                        P2door2.parentNode.removeChild(P2door2)
+                        P2door3.parentNode.removeChild(P2door3)
+
+                    });
+                    socket.on('p2Wins', function() {
+                        //do the delete doors thing
+                        console.log("Delete player 1 door")
+                        
+                    });
+                </script>
+        </a-scene>
     </body>
 </html>

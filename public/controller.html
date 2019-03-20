@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="/js/aframe-v0.8.2.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/randomNum.js"></script>
+        
     </head>
     <body>
-        <h1>This is the controller client</h1>
+        <a-scene>
+            <a-assets>
+                <a-asset-item id='model' src='assets/Door.obj'></a-asset-item>
+                <img id='texture' src='assets/DoorTexture.jpg'>
+            </a-assets>
 
-        <!-- some very nice color buttons -->
-        <button id="red" style="background-color:red; color:whitesmoke;">RED</button>
-        <button id="green" style="background-color:green; color:whitesmoke;">BLUE</button>
-        <button id="blue" style="background-color:blue; color:whitesmoke;">GREEN</button>
+            <a-entity id="player1Cam" position="0 2 0 " camera look-controls wasd-controls>
 
-        <!-- scripts go to bottom if you want them to execute AFTER the rest of the web page renders -->
-        <script src="/socket.io/socket.io.js"></script>
-        <script>
-            let socket = io();
+                <a-entity   cursor="fuse:true; fuseTimeout:500;"
+                            position="0 0 -1"
+                            geometry="primitive:ring; radiusInner:0.02; radiusOuter:0.03;"
+                            material="shader:flat; color:black;" >
+                </a-entity>
 
-            //default connect event
-            socket.on('connect', function() {
-                console.log("connected!");
-            });
+            </a-entity>
 
-            //let's send some events to the server to pass on. Programmatic telephone game!
-            //querySelector() is a more modern and versatile function of getElementById()
-            //#name or class
-            //.name for classes
-            //etc.
-            //https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector 
-            //note that querySelector can also be used on elements so that you only search for their children
-            //instead of all elements within teh "document"
-            document.querySelector('#red').addEventListener('click', function() {
-                socket.emit('red');
-            });
+            <a-entity id="p1door1" position="-5 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
+            <a-entity id="p1door2" position="0 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
+            <a-entity id="p1door3" position="5 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
 
-            document.querySelector('#green').addEventListener('click', function() {
-                socket.emit('green');
-            });
-
-            document.querySelector('#blue').addEventListener('click', function() {
-                socket.emit('blue');
-            });
-        </script>
+                <script>
+                    socket.on('p1Wins', function() {
+                        //do the delete doors thing
+                        console.log("Delete player 2 door")
+                        
+                    });
+                    socket.on('p2Wins', function() {
+                        //do the delete doors thing
+                        console.log("Delete player 1 door")
+                        
+                    });                
+                </script>
+        </a-scene>
     </body>
 </html>

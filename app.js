@@ -25,25 +25,33 @@ socketIO.on('connection', function(socket) {
         console.log(socket.id + ' has disconnected');
     });
 
-    //custom events
-    //socket = one client
-    //socketIO.sockets = all clients
-    socket.on('red', function(data) {
-        console.log('red event heard');
-        socketIO.sockets.emit('color_change', {r:255, g:0, b:0});
+
+    socket.on('player_1_wins', function() {
+        //do the delete doors thing
+        console.log("delete player 2 doors")
+        socketIO.sockets.emit('p1Wins');
     });
 
-    socket.on('green', function(data) {
-        console.log('green event heard');
-        socketIO.sockets.emit('color_change', {r:0, g:255, b:0});
+    socket.on('player_2_wins', function() {
+        //do the delete doors thing
+        console.log("delete player 1 doors")
+        socketIO.sockets.emit('p2Wins');
     });
 
-    socket.on('blue', function(data) {
-        console.log('blue event heard');
-        socketIO.sockets.emit('color_change', {r:0, g:0, b:255});
-    });
 });
+
+
+
+
+
+
+
+
+
+
 
 //finally, start server
 server.listen(LISTEN_PORT);
 console.log('listening to port: ' + LISTEN_PORT);
+
+
