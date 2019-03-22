@@ -11,6 +11,15 @@ var door2x = false;
 var door2z = false;
 var door3x = false;
 var door3z = false;
+
+P2door1 = document.querySelector('#p2door1')
+P2door2 = document.querySelector('#p2door2')
+P2door3 = document.querySelector('#p2door3')
+
+P1door1 = document.querySelector('#p1door1')
+P1door2 = document.querySelector('#p1door2')
+P1door3 = document.querySelector('#p1door3')
+
 window.onload = function (){
     let scene = document.querySelector('a-scene');
     
@@ -23,8 +32,6 @@ window.onload = function (){
 
 
     //pick which door is the correct one
-    
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////PLAYER 1///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     if (document.querySelector('#player1Cam') != null){
             //if door 1
@@ -46,6 +53,11 @@ window.onload = function (){
                 socket.emit('player_1_wins');
                 console.log("p1 win")
             }
+            else if(checkNum != 1 &&door1x == true && door1z ==true){
+
+                P1door1.setAttribute('position', '0 -100 0')
+                
+            }
         });
 
         //if door 2
@@ -66,6 +78,9 @@ window.onload = function (){
                 socket.emit('player_1_wins');
                 console.log("p1 win")
             }
+            else if(checkNum != 2 && door2x == true && door2z ==true){
+                P1door2.setAttribute('position', '0 -100 0')
+            }
         });
         //if door
         document.getElementById("p1door3").addEventListener("click", function(){
@@ -84,6 +99,9 @@ window.onload = function (){
             if( checkNum == 3 && door3x == true && door3z ==true){
                 socket.emit('player_1_wins');
                 console.log("p1 win")
+            }
+            else if(checkNum != 3 && door3x == true && door3z ==true){
+                P1door3.setAttribute('position', '0 -100 0')
             }
         });
     }
@@ -113,14 +131,11 @@ window.onload = function (){
                 socket.emit('player_2_wins');
                 console.log("p2 win")
             }
+            else if(checkNum != 1 && door1x == true && door1z ==true){
+                P2door1.setAttribute('position', '0 -100 0')
+            }
         });
 
-        // socket.on('p1WIN', function(data) {
-        //     console.log('player 1 wins');
-            
-        // });
-
-        //if door 2
         document.getElementById("p2door2").addEventListener("click", function(){
             //get camera position
             cPos = document.querySelector('#player2Cam').getAttribute('position');
@@ -137,6 +152,9 @@ window.onload = function (){
             if( checkNum == 2 && door2x == true && door2z ==true){
                 socket.emit('player_2_wins');
                 console.log("p2 win")
+            }
+            else if(checkNum != 2 && door2x == true && door2z ==true){
+                P2door2.setAttribute('position', '0 -100 0')
             }
         });
         //if door
@@ -156,6 +174,9 @@ window.onload = function (){
             if( checkNum == 3 && door3x == true && door3z ==true){
                 socket.emit('player_2_wins');
                 console.log("p2 win")
+            }
+            else if(checkNum != 3 && door3x == true && door3z ==true){
+                P2door3.setAttribute('position', '0 -100 0')
             }
         });
     }
