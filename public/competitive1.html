@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="/js/aframe-v0.8.2.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+
+        
+        <script src="/js/competitive_2p.js"></script>
+        
+    </head>
+    <body>
+        <a-scene>
+            <a-assets>
+                <a-asset-item id='model' src='assets/Door.obj'></a-asset-item>
+                <img id='texture' src='assets/DoorTexture.jpg'>
+                <img id='texture2' src='assets/DoorTexture2.jpg'>
+                <a-asset-item id='box' src='assets/Box.obj'></a-asset-item>
+                <img id='roomtexture' src='assets/Walls.jpg'>
+            </a-assets>
+
+                <a-entity id="player1CamCoop" position="-1 2 0 " camera look-controls wasd-controls>
+
+            <a-entity   cursor="fuse:true; fuseTimeout:500; rayOrigin: mouse;"></a-entity>
+
+
+            </a-entity>
+
+            <a-entity id="p1door1coop" position="-5 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
+            <a-entity id="p1door2coop" position="0 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
+            <a-entity id="p1door3coop" position="5 0 -10" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture"></a-entity>
+
+            <a-entity id="p2door1coop" position="-6 0 -15" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture2"></a-entity>
+            <a-entity id="p2door2coop" position="-1 0 -15" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture2"></a-entity>
+            <a-entity id="p2door3coop" position=" 4 0 -15" obj-model="obj: #model" scale="0.013 0.013 0.013" material="src:#texture2"></a-entity>
+
+
+            <!-- <a-entity id="winTxt2" text="value: YOU WIN!;" position="20 5 -20" scale="0 0 0"></a-entity>
+            <a-entity id="loseTxt2" text="value: YOU LOSE!;" position="20 5 -20" scale="0 0 0"></a-entity> -->
+            <a-entity id="startTxt1" text="value: open all the doors with your partner;" 
+            position="0.5 5 -10" scale="10 10 10"></a-entity>
+
+            <a-entity id="box" position="0 -1.3 -10" obj-model="obj: #box" scale="1 0.5 1" material="src:#roomtexture"></a-entity>
+
+                <script>
+                    P1door1coop = document.querySelector('#p1door1coop')
+                    P1door2coop = document.querySelector('#p1door2coop')
+                    P1door3coop = document.querySelector('#p1door3coop')
+
+                    socket.on('p1Wins', function() {
+                        //do the delete doors thing
+                        console.log("Delete player 2 doors")
+                        
+                        document.querySelector('#loseTxt2').setAttribute('scale', '50 50 50');
+                        document.querySelector('#startTxt2').setAttribute('scale', '0 0 0');
+
+                        P2door1.parentNode.removeChild(P2door1)
+                        P2door2.parentNode.removeChild(P2door2)
+                        P2door3.parentNode.removeChild(P2door3)
+
+                    });
+                    socket.on('p2Wins', function() {
+                        //do the delete doors thing
+                        console.log("You Won")
+
+                        document.querySelector('#winTxt2').setAttribute('scale', '50 50 50');
+                        document.querySelector('#startTxt2').setAttribute('scale', '0 0 0');
+
+                        P2door1.parentNode.removeChild(P2door1)
+                        P2door2.parentNode.removeChild(P2door2)
+                        P2door3.parentNode.removeChild(P2door3)
+                        
+                    });
+                </script>
+        </a-scene>
+    </body>
+</html>

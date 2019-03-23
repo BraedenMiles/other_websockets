@@ -1,24 +1,76 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
 
     <body>
         <a-scene>
                 <a-assets>
-                    <!-- <img id="p1Thumb" src="assets/p1_icon.jpg"> -->
-                    <img id="p2Thumb" src="assets/p2_icon.jpg">
+                    <font size="+2"><b>Select which player you are</b></font><br/>
 
-                    <a href="controller.html">
-                        <img id="p1Thumb"  src="assets/p1_icon.jpg">
-                    </a>
+                    <img id="vs"  src="assets/vs.jpg"><br/><br/>
+
+                    <font size="+1"><b>Co-op mode</b></font><br/>
+
+                    <img id="coop"  src="assets/coop.jpg">
                 </a-assets>         
                 
         </a-scene>
         <script>
+            let socket = io();
+            var p1ID;
+            var p2ID;
 
-            document.getElementById("p1Thumb").addEventListener("click", function(){
-                console.log("clicked");
-                //window.location.href="/public/controller.html";
+            //set the player IDs
+            socket.on('p1Join', function(id) {
+                
+                p1ID = id;
+                console.log('player 1',p1ID);
             });
+            socket.on('p2Join', function(id) {
+                
+                p2ID = id;
+                console.log('player 2',p2ID);
+            });
+            
+
+
+            document.getElementById("vs").addEventListener("click", function(){
+                console.log(socket.id);
+
+                    socket.emit('vsPlayer', socket.id)
+                    window.location.href = 'Loading.html';
+                
+            });
+
+            //if they click on the coop button
+            document.getElementById("coop").addEventListener("click", function(){
+
+                console.log('player 1',p1ID);
+                console.log('player 2',p2ID);
+
+                if (socket.id == p1ID){
+                    socket.emit('player1Join', p1ID);
+                }
+                else if (socket.id == p2ID){
+                    socket.emit('player2Join', p2ID);
+                }
+                
+            });
+            socket.on('goToLoad1', function() {
+                if (socket.id == p1ID){
+                    window.location.href = 'Loading.html';
+                }
+                
+            });
+
+            socket.on('goToLoad2', function() {
+                if (socket.id == p2ID){
+                    window.location.href = 'Loading.html';
+                }
+            });
+
             
         
         </script>

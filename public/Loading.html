@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+
+    <body>
+        <a-scene>
+            <a-assets>
+                    <font size="+4"><b>Waiting for second player</b></font><br/>
+            </a-assets>                
+      
+               
+        </a-scene>
+        <script>
+            let socket = io();
+
+            p1IN = false;
+            p2IN = false;
+
+            socket.on('loadScreen1', function(data){
+
+                if (data == 1){
+                    p1IN = true;
+                }
+                console.log('p1', p1IN);
+            });
+            socket.on('loadScreen2', function(data){
+                
+                if (data == true){
+                    p2IN = true;
+                }
+                console.log('p2', p2IN);
+            });
+
+            console.log('p2 is in the game', p2IN);
+            console.log('p1 is in the game', p1IN);
+            if (p1IN == true && p2IN == true){
+
+                console.log('moving page');
+                //window.location.href = 'color.html';
+            }
+
+        </script>
+    </body>
+    
+
+
+
+
+</html>
